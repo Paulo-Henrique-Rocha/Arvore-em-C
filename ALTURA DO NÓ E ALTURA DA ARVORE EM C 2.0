@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct noArvovre
+{
+    int info;
+    struct noArvovre* esq;
+    struct noArvovre* dir;
+};
+
+typedef struct noArvovre no;
+
+no* criar_no(int info,no* esq, no* dir)
+{
+    no* n = malloc(sizeof(no* ));
+    n -> info = info;
+    n -> esq  = esq;
+    n -> dir  = dir;
+    return n;
+}
+
+void imprimirArv(no* n)
+{
+    if(n != NULL)
+    {
+        printf("%c", n  -> info);
+        imprimirArv( n  -> esq );
+        imprimirArv( n  -> dir );
+    }
+}
+void main()
+{
+    no* nono = criar_no('A',criar_no('D',NULL,criar_no('V',criar_no('M',NULL,NULL),criar_no('W',NULL,NULL))),criar_no('C',NULL,NULL));
+    imprimirArv(nono);
+   
+   
+printf(" %d", altura(nono));
+printf(" %d", contarNos(nono));
+    return 0;
+}
+
+
+int contarNos(no* n){                            //CONTAR NÓ
+   if(n == NULL)
+        return 0;
+   else
+        return 1 + contarNos(n->esq) + contarNos(n->dir);
+}
+
+int maior(int a, int b){                        //ALTURA ARVORE
+    if(a > b)
+        return a;
+    else
+        return b;
+}
+
+int altura(no* n){
+   if((n == NULL) || (n->esq == NULL && n->dir == NULL))
+       return 0;
+   else
+       return 1 + maior(altura(n->esq), altura(n->dir));
+}
